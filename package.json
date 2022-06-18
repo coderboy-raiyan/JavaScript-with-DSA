@@ -1,0 +1,11 @@
+{
+  "name": "Matser-JS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/coderboy-raiyan/Matering-JS-with-DSA.git",
+  "author": "Raiyan <raiyan5764@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}

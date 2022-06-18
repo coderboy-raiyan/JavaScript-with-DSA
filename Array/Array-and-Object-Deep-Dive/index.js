@@ -1,3 +1,5 @@
+const axios = require("axios").default;
+
 /*
  Difference between Array and Object DSA 
 */
@@ -56,7 +58,6 @@ const studentsArray = [
   3. Update -> o(1)
   4. create a new One -> o(1)
 
-
 */
 
 const studentsObj = {
@@ -82,26 +83,65 @@ const studentsObj = {
   },
 };
 
-const std = {
-  name: "Ranbir Kapoor",
-  email: "kapoor@gmail.com",
+// My reduce function implementation
+const myReducer = (array, cb, init) => {
+  let acc = init;
+
+  for (let i = 0; i < array.length; i++) {
+    acc = cb(acc, array[i], i, array);
+  }
+
+  return acc;
 };
 
-studentsObj["b39daa8b-0b57-410a-0a58-e50a1515e36c"] = {
-  ...studentsObj["b39daa8b-0b57-410a-0a58-e50a1515e36c"],
-  ...std,
-};
+const sum = myReducer(
+  [1, 2, 3],
+  (acc, curr) => {
+    return (acc += curr);
+  },
+  0
+);
 
-console.log(studentsObj);
+console.log(sum);
 
-// const arr = [12, 34, 5, 6, false, NaN, "", 98];
+// How to made a Array from Object. The array object comes from fake DB
 
-// const result = arr.reduce((acc, curr, index) => {
-//   if (curr) {
-//     acc = [...acc, curr.toString()];
-//   }
+async function madeArrayToObject() {
+  try {
+    const { data } = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
 
-//   return acc;
-// }, []);
+    /*
+    * Map related way
 
-// console.log(result);
+     const neededData = data.slice(0, 10).map((post) => {
+      return {
+        id: post.id,
+        title: post.title,
+        userId: post.userId,
+      };
+    });
+
+    const newObj = {};
+
+    neededData.forEach((element) => {
+      newObj[element.id] = {
+        ...element,
+      };
+    }); 
+
+     */
+
+    const newObj = data.slice(0, 10).reduce((acc, curr) => {
+      acc[curr.id] = curr;
+      delete curr.body;
+      return acc;
+    }, {});
+
+    return newObj;
+  } catch (error) {
+    console.log(err);
+  }
+}
+madeArrayToObject().then((data) => console.log(data));
