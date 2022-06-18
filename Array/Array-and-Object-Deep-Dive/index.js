@@ -102,7 +102,7 @@ const sum = myReducer(
   0
 );
 
-console.log(sum);
+// console.log(sum);
 
 // How to made a Array from Object. The array object comes from fake DB
 
@@ -145,3 +145,31 @@ async function madeArrayToObject() {
   }
 }
 madeArrayToObject().then((data) => console.log(data));
+
+// Make a list of phone book
+const numbers = [
+  "Raiyan",
+  "Ruhul",
+  "Ratul",
+  "Aryaan",
+  "Adiba",
+  "Jiulie",
+  "Jaine",
+  "Oscar",
+];
+
+const list = numbers.reduce((acc, curr) => {
+  const letters = curr[0];
+
+  if (letters in acc) {
+    acc[letters] = [...acc[letters], curr];
+  } else {
+    acc[letters] = [curr];
+  }
+
+  return acc;
+}, {});
+
+Object.keys(list).forEach((letter) => {
+  console.log(letter + " " + list[letter]);
+});
