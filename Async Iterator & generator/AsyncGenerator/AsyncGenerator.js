@@ -24,7 +24,7 @@ async function* fetchSingleUserPost(users) {
 
 fetchTheUsers().then(async (users) => {
   const fetchPosts = await fetchSingleUserPost(users);
-  console.log(await fetchPosts.next());
-  console.log(await fetchPosts.next());
-  console.log(await fetchPosts.next());
+  for await (v of fetchSingleUserPost(users)) {
+    console.log(v);
+  }
 });
